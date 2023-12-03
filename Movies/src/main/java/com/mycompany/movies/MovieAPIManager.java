@@ -4,14 +4,9 @@
 
 package com.mycompany.movies;
 
-/**
- *
- * @author danny
- */
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -24,7 +19,7 @@ public class MovieAPIManager {
     private static final String BEARER_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzMTlhYWNlODlhNTZjN2M4ZDIxNzc1ZGU4NmJjNzdkZSIsInN1YiI6IjY1NmI1YjRhNjUxN2Q2MDE1MTY1MGUxYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.bko96yMUUSf_cHeYjBvZG4McHqPhE8dSzQU5tqqAU90";
     private static final String TRENDING_MOVIES_URL = "https://api.themoviedb.org/3/trending/movie/day?language=en-US";
 
-    public List<Movie> getTrendingMovies() throws Exception {
+    public List<Pelicula> getTrendingMovies() throws Exception {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(new URI(TRENDING_MOVIES_URL))
@@ -38,20 +33,20 @@ public class MovieAPIManager {
         JsonObject jsonObject = parser.parse(response.body()).getAsJsonObject();
         JsonArray results = jsonObject.getAsJsonArray("results");
 
-        List<Movie> movies = new ArrayList<>();
+        List<Pelicula> movies = new ArrayList<>();
         for (int i = 0; i < results.size(); i++) {
             JsonObject movieJson = results.get(i).getAsJsonObject();
             String title = movieJson.get("title").getAsString();
-            String year = movieJson.get("release_date").getAsString().split("-")[0]; // Assuming the date is in the format "yyyy-mm-dd"
-            Movie movie = new Movie(title, year);
+            String overview = movieJson.get("overview").getAsString();
+            String posterPath = movieJson.get("poster_path").getAsString();
+            Pelicula movie = new Pelicula(title, overview, posterPath);
             movies.add(movie);
         }
 
         return movies;
     }
 
-    public List<Movie> searchMovies(String title) throws Exception {
-        String searchUrl = "https://api.themoviedb.org/3/search/movie?api_key=" + API_KEY + "&query=" + title;
+    public List<Pelicula> searchMovies(String title) throws Exception {String searchUrl = "https://api.themoviedb.org/3/search/movie?api_key=" + API_KEY + "&query=" + title;
 
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -65,15 +60,16 @@ public class MovieAPIManager {
         JsonObject jsonObject = parser.parse(response.body()).getAsJsonObject();
         JsonArray results = jsonObject.getAsJsonArray("results");
 
-                List<Movie> movies = new ArrayList<>();
-                for (int i = 0; i < results.size(); i++) {
-                    JsonObject movieJson = results.get(i).getAsJsonObject();
-                    String movieTitle = movieJson.get("title").getAsString();
-                    String year = movieJson.get("release_date").getAsString().split("-")[0]; // Assuming the date is in the format "yyyy-mm-dd"
-                    Movie movie = new Movie(movieTitle, year);
-                    movies.add(movie);
-                }
+        List<Pelicula> movies = new ArrayList<>();
+        for (int i = 0; i < results.size(); i++) {
+            JsonObject movieJson = results.get(i).getAsJsonObject();
+            String movieTitle = movieJson.get("title").getAsString();
+            String overview = movieJson.get("overview").getAsString();
+            String posterPath = movieJson.get("poster_path").getAsString();
+            Pelicula movie = new Pelicula(movieTitle, overview, posterPath);
+            movies.add(movie);
+        }
 
-                return movies;
+        return movies;
     }
 }

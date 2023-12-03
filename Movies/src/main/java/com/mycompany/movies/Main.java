@@ -4,18 +4,13 @@
  */
 package com.mycompany.movies;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         MovieApp movieApp = new MovieApp();
         MovieAPIManager movieAPIManager = new MovieAPIManager();
-        Cast cast = new Cast();
-        Movie movie = new Movie();
 
         // Call methods on the objects here, for example:
         // movieApp.start();

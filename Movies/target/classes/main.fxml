@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.mycompany.movies.MainController">
-    <Label text="Hello, World!"/>
+    <TextField fx:id="titleSearchField" />
+    <Button fx:id="searchButton" text="Search" onAction="#searchMovies" />
+    <ListView fx:id="movieListView" />
+    <Label fx:id="errorLabel" />
 </VBox>

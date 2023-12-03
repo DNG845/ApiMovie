@@ -1,6 +1,6 @@
 com\mycompany\movies\MainController.class
 com\mycompany\movies\MovieApp.class
-com\mycompany\movies\Movie.class
+com\mycompany\movies\ControladorPeliculas.class
 com\mycompany\movies\Main.class
-com\mycompany\movies\Cast.class
 com\mycompany\movies\MovieAPIManager.class
+com\mycompany\movies\Pelicula.class
